@@ -115,3 +115,5 @@ select * from tbprodutos;
 select * from tbvendas;
 
 select func.nome as 'Nome do Funcionario',usu.nome as 'Nome de Usuario' from tbusers as usu inner join tbfuncionarios as func on usu.codFunc = func.codFunc;
+
+select func.nome as 'Nome do Funcionario',usu.nome as 'Nome de Usuario' from tbusers as usu inner join tbfuncionarios as func on usu.codFunc = func.codFunc where func.codFunc = 2;
