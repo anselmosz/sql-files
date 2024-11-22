@@ -124,3 +124,6 @@ select usr.nome as 'username', prod.descricao as 'produto', venda.quantidade as 
 inner join tbusers as usr on venda.codUsr = usr.codUsr
 inner join tbprodutos as prod on venda.codProd = prod.codProd
 inner join tbclientes as cli on venda.codCli = cli.codCli;
+
+select forn.nome as 'fornecedor', prod.lote, prod.validade, forn.email, prod.quantidade, forn.cnpj, prod.preco from tbprodutos as prod
+inner join tbfornecedores as forn on prod.codForn = forn.codForn;
