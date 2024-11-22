@@ -119,3 +119,8 @@ select func.nome as 'Nome do Funcionario',usu.nome as 'Nome de Usuario' from tbu
 select func.nome as 'Nome do Funcionario',usu.nome as 'Nome de Usuario' from tbusers as usu inner join tbfuncionarios as func on usu.codFunc = func.codFunc where func.nome like '%n%';
 
 select func.nome as 'Nome do Funcionario',usu.nome as 'Nome de Usuario' from tbusers as usu inner join tbfuncionarios as func on usu.codFunc = func.codFunc where func.codFunc = 2;
+
+select usr.nome as 'username', prod.descricao as 'produto', venda.quantidade as 'qtd venda', venda.valor as 'total venda', cli.nome as 'cliente' from tbvendas as venda
+inner join tbusers as usr on venda.codUsr = usr.codUsr
+inner join tbprodutos as prod on venda.codProd = prod.codProd
+inner join tbclientes as cli on venda.codCli = cli.codCli;
