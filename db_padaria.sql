@@ -22,3 +22,11 @@ create table tbfuncionarios(
   salario decimal(9,2) default 0 check(salario >= 0),
   primary key(codFunc)
 );
+
+create table tbusuarios(
+  codUsr int not null auto_increment,
+  nome varchar(50),
+  senha varchar(20),
+  primary key(codUsr),
+  foreign key(codFunc)
+);
