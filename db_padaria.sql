@@ -41,24 +41,6 @@ create table tbfornecedores(
 );
 desc tbfornecedores;
 
-create table tbCartaoCompra(
-  codCartao int not null auto_increment,
-  cliente varchar(100),
-  dataEmissao date,
-  primary key(codCartao)
-);
-desc tbCartaoCompra;
-
-create table tbusuarios(
-  codUsr int not null auto_increment,
-  nome varchar(50),
-  senha varchar(20),
-  codFunc int not null,
-  primary key(codUsr),
-  foreign key(codFunc)references tbfuncionarios(codFunc)
-);
-desc tbusuarios;
-
 create table tbprodutos(
   codProdt int not null auto_increment,
   descricao varchar(100),
@@ -73,21 +55,27 @@ create table tbprodutos(
 );
 desc tbprodutos;
 
-create table tbvendas(
-  codVenda int not null auto_increment,
+create table tbcompras(
+  codCompra int not null auto_increment,
   valor decimal(9,2) default 0 check(valor >= 0),
-  dataVenda date,
-  horaVenda time,
-  tipoPagamento varchar(50),
-  codCartao int not null,
-  codUsr int not null,
   codProdt int not null,
-  primary key(codVenda),
-  foreign key(codCartao)references tbCartaoCompra(codCartao),
-  foreign key(codUsr)references tbusuarios(codUsr),
+  primary key(codCompra),
   foreign key(codProdt)references tbprodutos(codProdt)
 );
-desc tbvendas;
+desc tbcompras;
+
+create table tbCartaoCompra(
+  codCartao int not null auto_increment,
+  cliente varchar(100),
+  dataCompra date,
+  horaCompra time,
+  payType varchar(50),
+  codFunc int not null,
+  codCompra int not null,
+  primary key(codCartao),
+  foreign key(codFunc)references tbfuncionarios(codFunc)
+);
+desc tbCartaoCompra;
 
 -- Insert na tabela de funcionários
 insert into tbfuncionarios(
@@ -112,19 +100,6 @@ insert into tbfuncionarios(
 ('Carlos Souza', '123987456', '123.987.456-00', '987456', 'carlos.souza@email.com', '(11)95678-1234', 'Rua D, 101', '25', 'Vila Progredior', '04040-040', 'Sao Paulo', 'SP', 'Padeiro', 1800.00),
 ('Fernanda Costa', '321654987', '321.654.987-00', '654987', 'fernanda.costa@email.com', '(11)96543-2109', 'Rua E, 202', '30', 'Bairro Alto', '05050-050', 'Sao Paulo', 'SP', 'Auxiliar de Limpeza', 1200.00);
 select * from tbfuncionarios;
-
--- Insert na tabela de usuários
-insert into tbusuarios(
-  nome,
-  senha,
-  codFunc
-  ) values 
-('ana.silva', 'senha123', 1),
-('joao.santos', 'senha456', 2),
-('maria.oliveira', 'senha789', 3),
-('carlos.souza', 'senha101', 4),
-('fernanda.costa', 'senha202', 5);
-select * from tbusuarios;
 
 -- Insert na tabela de fornecedores
 insert into tbfornecedores(
@@ -207,39 +182,47 @@ insert into tbprodutos(
   
 ('Sanduiche de Frango', 250, 'Lanches', 'L025', '2025-06-25', 14.00, 5);
 
+select * from tbprodutos;
+
+-- Insert na tabela de compraas
+insert into tbcompras(
+  valor,
+  codProdt
+) values 
+(14.00, 25),
+(9.00, 3),
+(21.00, 13),
+(30.00, 11),
+(20.00, 18);
+select * from tbcompras;
+
 -- Insert na tabela de cartoes de compra
 insert into tbCartaoCompra(
   cliente,
-  dataEmissao
+  dataCompra,
+  horaCompra,
+  payType,
+  codFunc,
+  codCompra
 ) values 
-('Joao Botelho','2024-11-25'),
-('Demostenes Barros','2024-11-25'),
-('Dorian Gray','2024-11-25'),
-('Fernanda Montenegro','2024-11-25');
+('Vincent', '2024-11-25', '10:07:00', 'Credito', 1, 4),
+('Fernanda Montenegro', '2024-11-20', '11:21:00', 'Dinheiro', 2, 5),
+('Marcelus Wallace', '2024-11-21', '11:24:00', 'Pix', 2, 3),
+('Dorian Gray','2024-11-25', '10:37:00','Debito', 1, 2),
+('Victor Frankenstein','2024-11-21', '09:00:00', 'Dinheiro', 2, 1);
 select * from tbCartaoCompra;
 
--- Insert na tabela de vendas
-insert into tbvendas(
-  valor,
-  dataVenda,
-  horaVenda,
-  tipoPagamento,
-  codCartao,
-  codUsr,
-  codProdt
-) values 
-(45.50, '2024-11-25', '10:30:00', 'Credito', 1, 1, 1),
-(30.00, '2024-11-25', '10:30:00', 'Credito', 1, 1, 2),
-(40.00, '2024-11-25', '10:30:00', 'Credito', 1, 1, 4),
 
-(70.50, '2024-11-25', '11:00:00', 'Debito', 2, 2, 3),
-(40.00, '2024-11-25', '11:00:00', 'Debito', 2, 2, 4),
+--*: Pesquisas avançadas nas tabelas / Updates
 
-(120.00, '2024-11-25', '14:15:00', 'Dinheiro', 3, 2, 5),
-(45.00, '2024-11-25', '14:15:00', 'Dinheiro', 3, 2, 6),
+-- Pesquisa de quais clientes realizaram compras e quais funcionários atenderam eles --* está com
+select compra.cliente as 'Nome do Cliente', func.nome as 'Nome do Funcionario', vend.valor as 'Valor da compra', compra.dataCompra as 'Data da compra' from tbCartaoCompra as compra
+inner join tbfuncionarios as func on compra.codFunc = func.codFunc
+inner join tbcompras as vend on compra.codCompra = vend.codCompra;
 
-(95.00, '2024-11-25', '16:45:00', 'Pix', 4, 1, 7),
-(55.00, '2024-11-25', '16:45:00', 'Pix', 4, 1, 8);
-select * from tbvendas;
+-- Update na tabela funcionários
+update tbfuncionarios set salario = 1800.00 where cargo = 'Caixa'; -- atualiza o salario da linha que contém o campo "cargo" igual a 'Caixa'
+select * from tbfuncionarios where cargo = 'Caixa';
 
---ToDo: Pesquisas avançadas nas tabelas
+update tbfuncionarios set endereco = 'Rua Z, 000', numero = '150', bairro = 'Capao Redondo' where nome like '%j%'; -- Atualiza os dados de endereço da linha que possui a letra 'J' no campo "nome"
+select * from tbfuncionarios where nome like '%j%';
