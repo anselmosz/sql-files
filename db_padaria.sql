@@ -241,3 +241,5 @@ insert into tbvendas(
 (95.00, '2024-11-25', '16:45:00', 'Pix', 4, 1, 7),
 (55.00, '2024-11-25', '16:45:00', 'Pix', 4, 1, 8);
 select * from tbvendas;
+
+--ToDo: Pesquisas avançadas nas tabelas
