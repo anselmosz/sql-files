@@ -9,7 +9,7 @@ create table tbfuncionarios(
   nome varchar(100),
   rg char(12) unique,
   cpf char(14) unique not null,
-  carteira char(11) not null,
+  carteira char(11)not null,
   email varchar(50),
   telefone char(10),
   endereco varchar(100),
@@ -29,7 +29,7 @@ create table tbfornecedores(
   empresa varchar(100),
   nomeContato varchar(100),
   email varchar(100),
-  telefone char(10),
+  telefone char(14),
   cnpj char(14) not null,
   endereco varchar(100),
   numero char(5),
@@ -40,6 +40,14 @@ create table tbfornecedores(
   primary key(codForn)
 );
 desc tbfornecedores;
+
+create table tbCartaoCompra(
+  codCartao int not null auto_increment,
+  cliente varchar(100),
+  dataEmissao date,
+  primary key(codCartao)
+);
+desc tbCartaoCompra;
 
 create table tbusuarios(
   codUsr int not null auto_increment,
@@ -71,29 +79,15 @@ create table tbvendas(
   dataVenda date,
   horaVenda time,
   tipoPagamento varchar(50),
+  codCartao int not null,
   codUsr int not null,
   codProdt int not null,
   primary key(codVenda),
+  foreign key(codCartao)references tbCartaoCompra(codCartao),
   foreign key(codUsr)references tbusuarios(codUsr),
   foreign key(codProdt)references tbprodutos(codProdt)
 );
 desc tbvendas;
-
-create table tbCartaoCompra(
-  codCartao int not null auto_increment,
-  cliente varchar(100),
-  dataEmissao date,
-  codVenda int not null,
-  primary key(codCartao),
-  foreign key(codVenda)references tbvendas(codVenda)
-);
-desc tbCartaoCompra;
-
-insert into tbCartaoCompra(
-  cliente,
-  dataEmissao,
-  codVenda
-) values ();
 
 insert into tbfuncionarios(
   nome,
@@ -111,24 +105,24 @@ insert into tbfuncionarios(
   cargo,
   salario
 ) values
-('Ana Silva', '123456789', '123.456.789-00', '123456', 'ana.silva@email.com', '(11) 98765-4321', 'Rua A, 123', '10', 'Centro', '01010-010', 'Sao Paulo', 'SP', 'Caixa', 1500.00),
-('Joao Santos', '987654321', '987.654.321-00', '654321', 'joao.santos@email.com', '(11) 91234-5678', 'Rua B, 456', '15', 'Jardim Paulista', '02020-020', 'Sao Paulo', 'SP', 'Caixa', 1600.00),
-('Maria Oliveira', '456789123', '456.789.123-00', '789123', 'maria.oliveira@email.com', '(11) 93456-7890', 'Rua C, 789', '20', 'Vila Mariana', '03030-030', 'Sao Paulo', 'SP', 'Atendente', 1400.00),
-('Carlos Souza', '123987456', '123.987.456-00', '987456', 'carlos.souza@email.com', '(11) 95678-1234', 'Rua D, 101', '25', 'Vila Progredior', '04040-040', 'Sao Paulo', 'SP', 'Padeiro', 1800.00),
-('Fernanda Costa', '321654987', '321.654.987-00', '654987', 'fernanda.costa@email.com', '(11) 96543-2109', 'Rua E, 202', '30', 'Bairro Alto', '05050-050', 'Sao Paulo', 'SP', 'Auxiliar de Limpeza', 1200.00);
+('Ana Silva', '123456789', '123.456.789-00', '123456', 'ana.silva@email.com', '(11)98765-4321', 'Rua A, 123', '10', 'Centro', '01010-010', 'Sao Paulo', 'SP', 'Caixa', 1500.00),
+('Joao Santos', '987654321', '987.654.321-00', '654321', 'joao.santos@email.com', '(11)91234-5678', 'Rua B, 456', '15', 'Jardim Paulista', '02020-020', 'Sao Paulo', 'SP', 'Caixa', 1600.00),
+('Maria Oliveira', '456789123', '456.789.123-00', '789123', 'maria.oliveira@email.com', '(11)93456-7890', 'Rua C, 789', '20', 'Vila Mariana', '03030-030', 'Sao Paulo', 'SP', 'Atendente', 1400.00),
+('Carlos Souza', '123987456', '123.987.456-00', '987456', 'carlos.souza@email.com', '(11)95678-1234', 'Rua D, 101', '25', 'Vila Progredior', '04040-040', 'Sao Paulo', 'SP', 'Padeiro', 1800.00),
+('Fernanda Costa', '321654987', '321.654.987-00', '654987', 'fernanda.costa@email.com', '(11)96543-2109', 'Rua E, 202', '30', 'Bairro Alto', '05050-050', 'Sao Paulo', 'SP', 'Auxiliar de Limpeza', 1200.00);
 select * from tbfuncionarios;
 
--- insert into tbusuarios(
---   nome,
---   senha,
---   codFunc
---   ) values 
--- ('ana.silva', 'senha123', 1),
--- ('joao.santos', 'senha456', 2),
--- ('maria.oliveira', 'senha789', 3),
--- ('carlos.souza', 'senha101', 4),
--- ('fernanda.costa', 'senha202', 5);
--- select * from tbusuarios; 
+insert into tbusuarios(
+  nome,
+  senha,
+  codFunc
+  ) values 
+('ana.silva', 'senha123', 1),
+('joao.santos', 'senha456', 2),
+('maria.oliveira', 'senha789', 3),
+('carlos.souza', 'senha101', 4),
+('fernanda.costa', 'senha202', 5);
+select * from tbusuarios;
 
 insert into tbfornecedores(
   empresa,
@@ -143,10 +137,10 @@ insert into tbfornecedores(
   cidade,
   estado
 ) values
-('Distribuidora SP', 'Roberto Silva', 'roberto.silva@distsp.com', '(11) 99876-5432', '12.345.678/0001-90', 'Rua Alvarenga, 100', '10', 'Vila Industrial', '01010-100', 'São Paulo', 'SP'),
-('Atacadao', 'Juliana Pereira', 'juliana.pereira@atacadao.com.br', '(11) 98765-4321', '23.456.789/0001-01', 'Est. de Itapecerica, 2000', '20', 'Bela Vista', '01310-200', 'São Paulo', 'SP'),
-('Sonda Supermercados', 'Carlos Souza', 'carlos.souza@sonda.com.br', '(11) 93654-7890', '34.567.890/0001-12', 'Rua dos Jabutis, 150', '30', 'Alto da Lapa', '01440-300', 'São Paulo', 'SP'),
-('Vencedor Atacadista', 'Fernanda Costa', 'fernanda.costa@vencedoratc.com', '(11) 96543-2109', '45.678.901/0001-23', 'Rua das Flores, 250', '40', 'Jardim das Pedras', '02230-400', 'São Paulo', 'SP'),
+('Distribuidora SP', 'Roberto Silva', 'roberto.silva@distsp.com', '(11)99876-5432', '12.345.678/0001-90', 'Rua Alvarenga, 100', '10', 'Vila Industrial', '01010-100', 'Sao Paulo', 'SP'),
+('Atacadao', 'Juliana Pereira', 'juliana.pereira@atacadao.com.br', '(11)98765-4321', '23.456.789/0001-01', 'Est. de Itapecerica, 2000', '20', 'Bela Vista', '01310-200', 'Sao Paulo', 'SP'),
+('Sonda Supermercados', 'Carlos Souza', 'carlos.souza@sonda.com.br', '(11)93654-7890', '34.567.890/0001-12', 'Rua dos Jabutis, 150', '30', 'Alto da Lapa', '01440-300', 'Sao Paulo', 'SP'),
+('Vencedor Atacadista', 'Fernanda Costa', 'fernanda.costa@vencedoratc.com', '(11)96543-2109', '45.678.901/0001-23', 'Rua das Flores, 250', '40', 'Jardim das Pedras', '02230-400', 'Sao Paulo', 'SP'),
 ('Varejo Now', 'Paulo Alves', 'paulo.alves@varejonow.com', '(21) 98765-4321', '56.789.012/0001-34', 'Avenida Rio, 500', '50', 'Centro', '23010-500', 'Sao Paulo', 'SP');
 select * from tbfornecedores;
 
@@ -209,26 +203,35 @@ insert into tbprodutos(
   
 ('Sanduiche de Frango', 250, 'Lanches', 'L025', '2025-06-25', 14.00, 5);
 
+insert into tbCartaoCompra(
+  cliente,
+  dataEmissao,
+) values 
+('Joao Botelho','2024-11-25'),
+('Demostenes Barros','2024-11-25'),
+('Dorian Gray','2024-11-25'),
+('Fernanda Montenegro','2024-11-25');
+
 insert into tbvendas(
   valor,
   dataVenda,
   horaVenda,
   tipoPagamento,
+  codCartao,
   codUsr,
   codProdt
 ) values 
-(45.50, '2024-11-25', '10:30:00', 'Credito', 1, 1),
-(30.00, '2024-11-25', '10:30:00', 'Credito', 1, 2),
+(45.50, '2024-11-25', '10:30:00', 'Credito', 1, 1, 1),
+(30.00, '2024-11-25', '10:30:00', 'Credito', 1, 1, 2),
+(40.00, '2024-11-25', '10:30:00', 'Credito', 1, 1, 4),
 
-(70.50, '2024-11-25', '11:00:00', 'Debito', 2, 3),
-(40.00, '2024-11-25', '11:00:00', 'Debito', 2, 4),
+(70.50, '2024-11-25', '11:00:00', 'Debito', ,2 2, 3),
+(40.00, '2024-11-25', '11:00:00', 'Debito', 2, 2, 4),
 
-(120.00, '2024-11-25', '14:15:00', 'Dinheiro', 3, 5),
-(45.00, '2024-11-25', '14:15:00', 'Dinheiro', 3, 6),
+(120.00, '2024-11-25', '14:15:00', 'Dinheiro', 3, 2, 5),
+(45.00, '2024-11-25', '14:15:00', 'Dinheiro', 3, 2, 6),
 
-(95.00, '2024-11-25', '16:45:00', 'Pix', 4, 7),
-(55.00, '2024-11-25', '16:45:00', 'Pix', 4, 8),
+(95.00, '2024-11-25', '16:45:00', 'Pix', 4, 1, 7),
+(55.00, '2024-11-25', '16:45:00', 'Pix', 4, 1, 8),
 
-(180.00, '2024-11-25', '18:00:00', 'Credito', 5, 9),
-(100.00, '2024-11-25', '18:00:00', 'Credito', 5, 10);
 select * from tbvendas;
