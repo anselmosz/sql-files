@@ -89,6 +89,7 @@ create table tbvendas(
 );
 desc tbvendas;
 
+-- Insert na tabela de funcionários
 insert into tbfuncionarios(
   nome,
   rg,
@@ -112,6 +113,7 @@ insert into tbfuncionarios(
 ('Fernanda Costa', '321654987', '321.654.987-00', '654987', 'fernanda.costa@email.com', '(11)96543-2109', 'Rua E, 202', '30', 'Bairro Alto', '05050-050', 'Sao Paulo', 'SP', 'Auxiliar de Limpeza', 1200.00);
 select * from tbfuncionarios;
 
+-- Insert na tabela de usuários
 insert into tbusuarios(
   nome,
   senha,
@@ -124,6 +126,7 @@ insert into tbusuarios(
 ('fernanda.costa', 'senha202', 5);
 select * from tbusuarios;
 
+-- Insert na tabela de fornecedores
 insert into tbfornecedores(
   empresa,
   nomeContato,
@@ -144,6 +147,7 @@ insert into tbfornecedores(
 ('Varejo Now', 'Paulo Alves', 'paulo.alves@varejonow.com', '(21) 98765-4321', '56.789.012/0001-34', 'Avenida Rio, 500', '50', 'Centro', '23010-500', 'Sao Paulo', 'SP');
 select * from tbfornecedores;
 
+-- Insert na tabela de produtos
 insert into tbprodutos(
   descricao,
   quantidade,
@@ -203,15 +207,18 @@ insert into tbprodutos(
   
 ('Sanduiche de Frango', 250, 'Lanches', 'L025', '2025-06-25', 14.00, 5);
 
+-- Insert na tabela de cartoes de compra
 insert into tbCartaoCompra(
   cliente,
-  dataEmissao,
+  dataEmissao
 ) values 
 ('Joao Botelho','2024-11-25'),
 ('Demostenes Barros','2024-11-25'),
 ('Dorian Gray','2024-11-25'),
 ('Fernanda Montenegro','2024-11-25');
+select * from tbCartaoCompra;
 
+-- Insert na tabela de vendas
 insert into tbvendas(
   valor,
   dataVenda,
@@ -225,13 +232,12 @@ insert into tbvendas(
 (30.00, '2024-11-25', '10:30:00', 'Credito', 1, 1, 2),
 (40.00, '2024-11-25', '10:30:00', 'Credito', 1, 1, 4),
 
-(70.50, '2024-11-25', '11:00:00', 'Debito', ,2 2, 3),
+(70.50, '2024-11-25', '11:00:00', 'Debito', 2, 2, 3),
 (40.00, '2024-11-25', '11:00:00', 'Debito', 2, 2, 4),
 
 (120.00, '2024-11-25', '14:15:00', 'Dinheiro', 3, 2, 5),
 (45.00, '2024-11-25', '14:15:00', 'Dinheiro', 3, 2, 6),
 
 (95.00, '2024-11-25', '16:45:00', 'Pix', 4, 1, 7),
-(55.00, '2024-11-25', '16:45:00', 'Pix', 4, 1, 8),
-
+(55.00, '2024-11-25', '16:45:00', 'Pix', 4, 1, 8);
 select * from tbvendas;
