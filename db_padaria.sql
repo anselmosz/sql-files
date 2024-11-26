@@ -11,7 +11,7 @@ create table tbfuncionarios(
   cpf char(14) unique not null,
   carteira char(11)not null,
   email varchar(50),
-  telefone char(10),
+  telefone char(15),
   endereco varchar(100),
   numero char(5),
   bairro varchar(100),
