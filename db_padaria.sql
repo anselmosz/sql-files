@@ -73,7 +73,8 @@ create table tbCartaoCompra(
   codFunc int not null,
   codCompra int not null,
   primary key(codCartao),
-  foreign key(codFunc)references tbfuncionarios(codFunc)
+  foreign key(codFunc)references tbfuncionarios(codFunc),
+  foreign key(codCompra)references tbcompras(codCompra)
 );
 desc tbCartaoCompra;
 
