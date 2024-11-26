@@ -11,7 +11,7 @@ create table tbfuncionarios(
   cpf char(14) unique not null,
   carteira char(11)not null,
   email varchar(50),
-  telefone char(15),
+  telefone char(14),
   endereco varchar(100),
   numero char(5),
   bairro varchar(100),
@@ -144,7 +144,7 @@ insert into tbfornecedores(
 ('Atacadao', 'Juliana Pereira', 'juliana.pereira@atacadao.com.br', '(11)98765-4321', '23.456.789/0001-01', 'Est. de Itapecerica, 2000', '20', 'Bela Vista', '01310-200', 'Sao Paulo', 'SP'),
 ('Sonda Supermercados', 'Carlos Souza', 'carlos.souza@sonda.com.br', '(11)93654-7890', '34.567.890/0001-12', 'Rua dos Jabutis, 150', '30', 'Alto da Lapa', '01440-300', 'Sao Paulo', 'SP'),
 ('Vencedor Atacadista', 'Fernanda Costa', 'fernanda.costa@vencedoratc.com', '(11)96543-2109', '45.678.901/0001-23', 'Rua das Flores, 250', '40', 'Jardim das Pedras', '02230-400', 'Sao Paulo', 'SP'),
-('Varejo Now', 'Paulo Alves', 'paulo.alves@varejonow.com', '(21) 98765-4321', '56.789.012/0001-34', 'Avenida Rio, 500', '50', 'Centro', '23010-500', 'Sao Paulo', 'SP');
+('Varejo Now', 'Paulo Alves', 'paulo.alves@varejonow.com', '(11)98765-4321', '56.789.012/0001-34', 'Avenida Rio, 500', '50', 'Centro', '23010-500', 'Sao Paulo', 'SP');
 select * from tbfornecedores;
 
 -- Insert na tabela de produtos
