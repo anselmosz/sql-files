@@ -216,25 +216,25 @@ select * from tbCartaoCompra;
 
 --* Pesquisas avançadas nas tabelas / Updates
 
-select vend.valor, vend.dataVenda, vend.tipoPagamento, cartao.cliente from tbVendas as vend
-inner join tbCartaoCompra as cartao
-on vend.codCartao = cartao.codCartao;
+select compra.valor, cartao.dataCompra, cartao.payType, cartao.cliente from tbCartaoCompra as cartao
+inner join tbcompras as compra
+on cartao.codCompra = compra.codCompra;
 
-select func.nome, func.cpf, func.cargo, func.codFunc, func.senha from tbfuncionarios as func
-inner join tbfuncarios as func
-on func.codfunc = func.codfunc;
+select nome, cpf, cargo, codFunc from tbfuncionarios;
 
-select forn.telefone, forn.cnpj, forn.endereco, prod.descricao, prod.lote, prod.preco from tbfornecedores as forn
-inner join tbProdutos as prod
-on forn.codforn = prod.codforn;
+select forn.telefone, forn.cnpj, forn.endereco, prod.descricao, prod.lote, prod.preco from tbprodutos as prod
+inner join tbfornecedores as forn
+on prod.codforn = forn.codforn;
 
-select func.nome, vend.codVenda, vend.codUsr from tbfuncionarios as func
-inner join tbvendas as vend
-on func.codUsr = vend.codUsr;
-
-select func.nome, func.senha, vend.codProdt, vend.tipoPagamento, vend.dataVenda from tbVendas as vend
+select func.nome, cartao.codCompra, func.codFunc from tbCartaoCompra as cartao
 inner join tbfuncionarios as func
-on vend.codUsr = func.codUsr;
+on cartao.codFunc = func.codFunc;
+
+select func.nome, prod.codProdt, vend.payType, vend.dataCompra from tbCartaoCompra as vend
+inner join tbfuncionarios as func
+on vend.codFunc = func.codFunc
+inner join tbcompras as prod
+on vend.codCompra = prod.codCompra;
 
 --* Update na tabela funcionários
 
@@ -246,4 +246,4 @@ select * from tbfuncionarios where nome like '%j%';
 
 --* Update na tabela de produtos
 
-update tbprodutos set quantidade+50 where categoria = 'Frios' and codForn = ;
+update tbprodutos set quantidade+50 where categoria = 'Frios' and codForn in(1 or 2);
