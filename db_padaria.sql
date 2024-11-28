@@ -215,25 +215,25 @@ select * from tbCartaoCompra;
 
 
 --* Pesquisas avançadas nas tabelas / Updates
-select compra.valor, cartao.dataCompra, cartao.payType, cartao.cliente from tbCartaoCompra as cartao
-inner join tbcompras as compra
-on cartao.codCompra = compra.codCompra;
+select forn.empresa, forn.telefone, prod.descricao, prod.lote from tbfornecedores as forn
+inner join tbprodutos as prod
+on forn.codForn = prod.codForn;
 
-select nome, cpf, cargo, codFunc from tbfuncionarios;
+select prod.quantidade, prod.categoria, comp.valor, comp.codProdt from tbcompras as comp
+inner join tbprodutos as prod
+on comp.codProdt = prod.codProdt;
 
-select forn.telefone, forn.cnpj, forn.endereco, prod.descricao, prod.lote, prod.preco from tbprodutos as prod
-inner join tbfornecedores as forn
-on prod.codforn = forn.codforn;
-
-select func.nome, cartao.codCompra, func.codFunc from tbCartaoCompra as cartao
+select carcom.dataCompra, carcom.payType, func.codFunc, func.cargo from tbcartaocompra as carcom
 inner join tbfuncionarios as func
-on cartao.codFunc = func.codFunc;
+on carcom.codFunc = func.codFunc;
 
-select func.nome, prod.codProdt, vend.payType, vend.dataCompra from tbCartaoCompra as vend
+select carcomp.cliente, carcomp.dataCompra, comp.valor, comp.codProdt from tbcartaocompra as carcomp
+inner join tbcompras as comp
+on carcomp.codCompra = comp.codCompra;
+
+select ccomp.codCartao, ccomp.cliente, ccomp.payType,func.nome as 'Nome do funcionario', func.codFunc from tbCartaoCompra as ccomp
 inner join tbfuncionarios as func
-on vend.codFunc = func.codFunc
-inner join tbcompras as prod
-on vend.codCompra = prod.codCompra;
+on ccomp.codFunc = func.codFunc;
 
 --* Update na tabela funcionários
 update tbfuncionarios set salario = 1800.00 where cargo = 'Caixa'; -- atualiza o salario da linha que contém o campo "cargo" igual a 'Caixa'
