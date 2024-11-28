@@ -220,9 +220,21 @@ select vend.valor, vend.dataVenda, vend.tipoPagamento, cartao.cliente from tbVen
 inner join tbCartaoCompra as cartao
 on vend.codCartao = cartao.codCartao;
 
-select func.nome, func.cpf, func.cargo, usu.codUsr, usu.senha from tbfuncionarios as func
-inner join tbusuarios as usu
-on func.codfunc = usu.codfunc;
+select func.nome, func.cpf, func.cargo, func.codFunc, func.senha from tbfuncionarios as func
+inner join tbfuncarios as func
+on func.codfunc = func.codfunc;
+
+select forn.telefone, forn.cnpj, forn.endereco, prod.descricao, prod.lote, prod.preco from tbfornecedores as forn
+inner join tbProdutos as prod
+on forn.codforn = prod.codforn;
+
+select func.nome, vend.codVenda, vend.codUsr from tbfuncionarios as func
+inner join tbvendas as vend
+on func.codUsr = vend.codUsr;
+
+select func.nome, func.senha, vend.codProdt, vend.tipoPagamento, vend.dataVenda from tbVendas as vend
+inner join tbfuncionarios as func
+on vend.codUsr = func.codUsr;
 
 --* Update na tabela funcionários
 
@@ -232,4 +244,6 @@ select * from tbfuncionarios where cargo = 'Caixa';
 update tbfuncionarios set endereco = 'Rua Z, 000', numero = '150', bairro = 'Capao Redondo' where nome like '%j%'; -- Atualiza os dados de endereço da linha que possui a letra 'J' no campo "nome"
 select * from tbfuncionarios where nome like '%j%';
 
-update tbprodutos set quantidade +50 where categoria = 'Frios' and codForn between 1 and 3;
+--* Update na tabela de produtos
+
+update tbprodutos set quantidade+50 where categoria = 'Frios' and codForn = ;
