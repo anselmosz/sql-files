@@ -215,7 +215,6 @@ select * from tbCartaoCompra;
 
 
 --* Pesquisas avançadas nas tabelas / Updates
-
 select compra.valor, cartao.dataCompra, cartao.payType, cartao.cliente from tbCartaoCompra as cartao
 inner join tbcompras as compra
 on cartao.codCompra = compra.codCompra;
@@ -237,7 +236,6 @@ inner join tbcompras as prod
 on vend.codCompra = prod.codCompra;
 
 --* Update na tabela funcionários
-
 update tbfuncionarios set salario = 1800.00 where cargo = 'Caixa'; -- atualiza o salario da linha que contém o campo "cargo" igual a 'Caixa'
 select * from tbfuncionarios where cargo = 'Caixa';
 
@@ -245,5 +243,5 @@ update tbfuncionarios set endereco = 'Rua Z, 000', numero = '150', bairro = 'Cap
 select * from tbfuncionarios where nome like '%j%';
 
 --* Update na tabela de produtos
-
-update tbprodutos set quantidade+50 where categoria = 'Frios' and codForn in(1 or 2);
+update tbprodutos set quantidade = quantidade + 50 where categoria = 'Frios' and codForn between 2 and 4;
+select * from tbprodutos where categoria = 'Frios' and codForn between 2 and 4;
