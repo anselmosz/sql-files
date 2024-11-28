@@ -214,16 +214,22 @@ insert into tbCartaoCompra(
 select * from tbCartaoCompra;
 
 
---*: Pesquisas avançadas nas tabelas / Updates
+--* Pesquisas avançadas nas tabelas / Updates
 
--- Pesquisa de quais clientes realizaram compras e quais funcionários atenderam eles --* está com
-select compra.cliente as 'Nome do Cliente', func.nome as 'Nome do Funcionario', vend.valor as 'Valor da compra', compra.dataCompra as 'Data da compra' from tbCartaoCompra as compra
-inner join tbfuncionarios as func on compra.codFunc = func.codFunc
-inner join tbcompras as vend on compra.codCompra = vend.codCompra;
+select vend.valor, vend.dataVenda, vend.tipoPagamento, cartao.cliente from tbVendas as vend
+inner join tbCartaoCompra as cartao
+on vend.codCartao = cartao.codCartao;
 
--- Update na tabela funcionários
+select func.nome, func.cpf, func.cargo, usu.codUsr, usu.senha from tbfuncionarios as func
+inner join tbusuarios as usu
+on func.codfunc = usu.codfunc;
+
+--* Update na tabela funcionários
+
 update tbfuncionarios set salario = 1800.00 where cargo = 'Caixa'; -- atualiza o salario da linha que contém o campo "cargo" igual a 'Caixa'
 select * from tbfuncionarios where cargo = 'Caixa';
 
 update tbfuncionarios set endereco = 'Rua Z, 000', numero = '150', bairro = 'Capao Redondo' where nome like '%j%'; -- Atualiza os dados de endereço da linha que possui a letra 'J' no campo "nome"
 select * from tbfuncionarios where nome like '%j%';
+
+update tbprodutos set quantidade +50 where categoria = 'Frios' and codForn between 1 and 3;
