@@ -227,9 +227,7 @@ select carcom.dataCompra, carcom.payType, func.codFunc, func.cargo from tbcartao
 inner join tbfuncionarios as func
 on carcom.codFunc = func.codFunc;
 
-select carcomp.cliente, carcomp.dataCompra, comp.valor, comp.codProdt from tbcartaocompra as carcomp
-inner join tbcompras as comp
-on carcomp.codCompra = comp.codCompra;
+select descricao, codProdt, preco from tbprodutos where preco in(10, 20, 25);
 
 select comp.codCartao, comp.cliente, comp.payType,func.nome as 'Nome do funcionario', func.codFunc from tbCartaoCompra as comp
 inner join tbfuncionarios as func
@@ -243,7 +241,25 @@ update tbfuncionarios set endereco = 'Rua Z, 000', numero = '150', bairro = 'Cap
 select * from tbfuncionarios where nome like '%j%';
 
 update tbfuncionarios set telefone = '(11)98933-0134' where cep = '02020-020';
+select * from tbfuncionarios where telefone like '(11)98933-0134';
+
+update tbfuncionarios set carteira = '192512' where codFunc = 3;
+select * from tbfuncionarios where codFunc = 3;
 
 --* Update na tabela de produtos
-update tbprodutos set quantidade = quantidade + 50 where categoria = 'Frios' and codForn between 2 and 4;
-select * from tbprodutos where categoria = 'Frios' and codForn between 2 and 4;
+update tbprodutos set quantidade = quantidade + 50 where categoria = 'Frios' and codForn in(1,3);
+select * from tbprodutos where categoria = 'Frios' and codForn in(1,3);
+
+update tbprodutos set preco = preco + 3.00 where codForn between 2 and 4;
+select * from tbprodutos where codForn between 2 and 4;
+
+update tbprodutos set preco = preco +2.50, quantidade = quantidade +50 where descricao = 'Leite Integral';
+select * from tbprodutos where descricao = 'Leite Integral';
+
+update tbprodutos set codForn = 3 where descricao  = 'Cigarros' and lote like '%11%' or lote like '%21%';
+select * from tbprodutos where descricao = 'Cigarros';
+
+update tbprodutos set categoria = 'Carnes' where codProdt in(6, 16);
+select * from tbprodutos where categoria = 'Carnes'
+  
+-- source C:\Users\matheus.sanselmo1\Documents\matheus-anselmo\sql-files\db_padaria.sql
