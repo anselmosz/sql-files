@@ -231,9 +231,9 @@ select carcomp.cliente, carcomp.dataCompra, comp.valor, comp.codProdt from tbcar
 inner join tbcompras as comp
 on carcomp.codCompra = comp.codCompra;
 
-select ccomp.codCartao, ccomp.cliente, ccomp.payType,func.nome as 'Nome do funcionario', func.codFunc from tbCartaoCompra as ccomp
+select comp.codCartao, comp.cliente, comp.payType,func.nome as 'Nome do funcionario', func.codFunc from tbCartaoCompra as comp
 inner join tbfuncionarios as func
-on ccomp.codFunc = func.codFunc;
+on comp.codFunc = func.codFunc;
 
 --* Update na tabela funcionários
 update tbfuncionarios set salario = 1800.00 where cargo = 'Caixa'; -- atualiza o salario da linha que contém o campo "cargo" igual a 'Caixa'
@@ -241,6 +241,8 @@ select * from tbfuncionarios where cargo = 'Caixa';
 
 update tbfuncionarios set endereco = 'Rua Z, 000', numero = '150', bairro = 'Capao Redondo' where nome like '%j%'; -- Atualiza os dados de endereço da linha que possui a letra 'J' no campo "nome"
 select * from tbfuncionarios where nome like '%j%';
+
+update tbfuncionarios set telefone = '(11)98933-0134' where cep = '02020-020';
 
 --* Update na tabela de produtos
 update tbprodutos set quantidade = quantidade + 50 where categoria = 'Frios' and codForn between 2 and 4;
